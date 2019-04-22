@@ -4,7 +4,6 @@
   "description": "Allow store i18n-messages in database",
   "keywords": ["symfony", "i18n", "translations"],
   "license": "MIT",
-  "version": "0.1",
   "authors": [
     {
       "name": "Andrew Zhdanovskih",
