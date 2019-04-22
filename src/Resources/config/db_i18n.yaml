@@ -1,0 +1,3 @@
+db_i18n:
+  entity: Creative\DbI18nBundle\Entity\Translation
+  domain: db_messages

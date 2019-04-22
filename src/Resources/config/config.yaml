@@ -1,0 +1,23 @@
+services:
+  _defaults:
+    autowire: true
+    autoconfigure: true
+
+  Creative\DbI18nBundle\:
+    resource: '../../../src'
+    exclude: '../../../src/{Entity,Resources}'
+
+  translation.loader.db:
+    class: Creative\DbI18nBundle\Loader\DbLoader
+    arguments:
+      - '@service_container'
+      - '@doctrine.orm.entity_manager'
+    tags:
+      - { name: translation.loader, alias: db }
+
+  Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface:
+    tags:
+      - { name: doctrine.repository_service }
+
+  Creative\DbI18nBundle\Command\MigrateToDatabaseCommand:
+    tags: [ console.command ]
