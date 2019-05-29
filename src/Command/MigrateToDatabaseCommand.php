@@ -158,6 +158,7 @@ EOL;
                 $em->flush();
             }
         }
+        $em->flush();
 
         return $count;
     }
