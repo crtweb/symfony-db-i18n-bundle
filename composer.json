@@ -16,6 +16,8 @@
     "doctrine/doctrine-bundle": "^1.8",
     "doctrine/orm": "^2.6",
     "doctrine/persistence": "^1.0",
+    "ramsey/uuid": "^3.8",
+    "ramsey/uuid-doctrine": "^1.5",
     "symfony/config": "^4.1",
     "symfony/dependency-injection": "^4.1",
     "symfony/doctrine-bridge": "^4.1",

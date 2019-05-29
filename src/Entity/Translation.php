@@ -31,7 +31,7 @@ class Translation implements EntityInterface
     private $locale;
 
     /**
-     * @ORM\Column(type="string", length=255)
+     * @ORM\Column(type="string", length=255, name="trans_key")
      */
     private $key;
 
