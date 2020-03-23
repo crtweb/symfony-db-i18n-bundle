@@ -1,0 +1,21 @@
+parameters:
+  env(DATABASE_URL): ''
+
+doctrine:
+  dbal:
+    url: 'sqlite:///%kernel.cache_dir%/../../app.db'
+    driver: 'pdo_sqlite'
+    charset: utf8
+    types:
+      uuid:  Ramsey\Uuid\Doctrine\UuidType
+  orm:
+    auto_generate_proxy_classes: true
+    naming_strategy: doctrine.orm.naming_strategy.underscore
+    auto_mapping: true
+    mappings:
+      App:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/src/Entity'
+        prefix: 'App\Entity'
+        alias: App

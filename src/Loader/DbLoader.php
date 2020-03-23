@@ -10,8 +10,7 @@ namespace Creative\DbI18nBundle\Loader;
 use Creative\DbI18nBundle\Interfaces\DbLoaderInterface;
 use Creative\DbI18nBundle\Interfaces\EntityInterface;
 use Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface;
-use Doctrine\Common\Persistence\ObjectRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
@@ -25,7 +24,7 @@ use Symfony\Component\Translation\MessageCatalogue;
 class DbLoader implements LoaderInterface, DbLoaderInterface
 {
     /**
-     * @var EntityManagerInterface
+     * @var ManagerRegistry
      */
     private $doctrine;
 
@@ -37,9 +36,9 @@ class DbLoader implements LoaderInterface, DbLoaderInterface
     /**
      * DbLoader constructor.
      * @param ContainerInterface $container
-     * @param EntityManagerInterface $doctrine
+     * @param ManagerRegistry $doctrine
      */
-    public function __construct(ContainerInterface $container, EntityManagerInterface $doctrine)
+    public function __construct(ContainerInterface $container, ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
         $this->entityClass = $container->getParameter('db_i18n.entity');
@@ -73,10 +72,15 @@ class DbLoader implements LoaderInterface, DbLoaderInterface
     }
 
     /**
-     * @return TranslationRepositoryInterface|ObjectRepository
+     * {@inheritDoc}
      */
     public function getRepository(): TranslationRepositoryInterface
     {
-        return $this->doctrine->getRepository($this->entityClass);
+        $repository = $this->doctrine->getRepository($this->entityClass);
+        if ($repository instanceof TranslationRepositoryInterface) {
+            return $repository;
+        }
+
+        throw new \RuntimeException(\sprintf('Cannot load repository %s', TranslationRepositoryInterface::class));
     }
 }

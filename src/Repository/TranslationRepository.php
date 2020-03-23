@@ -6,7 +6,7 @@ use Creative\DbI18nBundle\Entity\Translation;
 use Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 
 /**
  * @method Translation|null find($id, $lockMode = null, $lockVersion = null)
@@ -19,9 +19,9 @@ class TranslationRepository extends ServiceEntityRepository implements Translati
     /**
      * TranslationRepository constructor.
      *
-     * @param RegistryInterface $registry
+     * @param ManagerRegistry $registry
      */
-    public function __construct(RegistryInterface $registry)
+    public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Translation::class);
     }

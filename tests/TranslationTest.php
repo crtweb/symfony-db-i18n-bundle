@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Creative\DbI18nBundle\Tests;
 
 use Creative\DbI18nBundle\Entity\Translation;
-use Symfony\Bundle\FrameworkBundle\Tests\TestCase;
+use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase as TestCase;
 
 class TranslationTest extends TestCase
 {

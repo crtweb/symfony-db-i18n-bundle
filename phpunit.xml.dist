@@ -4,11 +4,16 @@
          xsi:noNamespaceSchemaLocation="http://schema.phpunit.de/6.5/phpunit.xsd"
          backupGlobals="false"
          colors="true"
+         bootstrap="./vendor/autoload.php"
 >
     <php>
         <ini name="error_reporting" value="-1" />
         <env name="APP_ENV" value="test" />
+        <env name="APP_DEBUG" value="true" />
         <env name="SHELL_VERBOSITY" value="-1" />
+        <env name="SYMFONY_DEPRECATIONS_HELPER" value="max[total]=999999" />
+        <env name="SYMFONY_PHPUNIT_VERSION" value="8.1" />
+        <env name="KERNEL_CLASS" value="Creative\DbI18nBundle\Tests\Kernel" />
     </php>
 
     <testsuites>
@@ -22,4 +27,8 @@
             <directory>src</directory>
         </whitelist>
     </filter>
+
+    <listeners>
+        <listener class="Symfony\Bridge\PhpUnit\SymfonyTestsListener" />
+    </listeners>
 </phpunit>

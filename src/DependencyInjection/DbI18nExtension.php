@@ -35,11 +35,13 @@ class DbI18nExtension extends Extension
         $container->setParameter('db_i18n.entity', $config['entity']);
         $container->setParameter('db_i18n.domain', $config['domain']);
         $container->setParameter('db_i18n.root_dir', __DIR__ . '/../');
-        $container->setParameter('db_i18n.translation_dir', __DIR__ . '/../Resources/translations');
+        $container->setParameter('db_i18n.translation_dir', $container->getParameter('kernel.cache_dir'));
 
+        $localeNames = [$container->getParameter('kernel.default_locale')];
         if ($container->hasParameter('locales') && is_array($locales = $container->getParameter('locales'))) {
-            $this->makeLocaleFiles($locales, $container->getParameter('db_i18n.translation_dir'), $container->getParameter('db_i18n.domain'));
+            $localeNames = $locales;
         }
+        $this->makeLocaleFiles($localeNames, $container->getParameter('db_i18n.translation_dir'), $container->getParameter('db_i18n.domain'));
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/../Resources/config'));
         $loader->load('config.yaml');
