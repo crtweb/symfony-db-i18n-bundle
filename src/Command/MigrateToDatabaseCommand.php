@@ -9,7 +9,7 @@ namespace Creative\DbI18nBundle\Command;
 
 use Creative\DbI18nBundle\Interfaces\EntityInterface;
 use Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface;
-use Symfony\Bridge\Doctrine\RegistryInterface;
+use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\Console\Command\Command;
 use Symfony\Component\Console\Exception\RuntimeException;
 use Symfony\Component\Console\Input\InputArgument;
@@ -62,7 +62,7 @@ EOL;
     private $entityClass;
 
     /**
-     * @var RegistryInterface
+     * @var ManagerRegistry
      */
     private $doctrine;
 
@@ -76,10 +76,10 @@ EOL;
      *
      * @param ContainerInterface  $container
      * @param TranslatorInterface $translator
-     * @param RegistryInterface   $doctrine
+     * @param ManagerRegistry     $doctrine
      * @param string|null         $name
      */
-    public function __construct(ContainerInterface $container, TranslatorInterface $translator, RegistryInterface $doctrine, string $name = null)
+    public function __construct(ContainerInterface $container, TranslatorInterface $translator, ManagerRegistry $doctrine, string $name = null)
     {
         parent::__construct($name);
         $this->container = $container;

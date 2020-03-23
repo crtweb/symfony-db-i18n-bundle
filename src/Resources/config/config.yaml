@@ -9,15 +9,21 @@ services:
 
   translation.loader.db:
     class: Creative\DbI18nBundle\Loader\DbLoader
+    public: '%kernel.debug%'
     arguments:
       - '@service_container'
-      - '@doctrine.orm.entity_manager'
+      - '@doctrine'
     tags:
       - { name: translation.loader, alias: db }
 
   Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface:
+    class: Creative\DbI18nBundle\Repository\TranslationRepository
     tags:
       - { name: doctrine.repository_service }
 
   Creative\DbI18nBundle\Command\MigrateToDatabaseCommand:
+    arguments:
+      - '@service_container'
+      - '@translator.default'
+      - '@doctrine'
     tags: [ console.command ]

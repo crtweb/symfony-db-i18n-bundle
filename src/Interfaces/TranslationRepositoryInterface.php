@@ -8,7 +8,7 @@ declare(strict_types=1);
 namespace Creative\DbI18nBundle\Interfaces;
 
 use Doctrine\Common\Collections\Collection;
-use Doctrine\Common\Persistence\ObjectRepository;
+use Doctrine\Persistence\ObjectRepository;
 
 interface TranslationRepositoryInterface extends ObjectRepository
 {
