@@ -16,7 +16,7 @@ use Symfony\Component\Console\Input\InputArgument;
 use Symfony\Component\Console\Input\InputInterface;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\Translator;
 use Symfony\Contracts\Translation\TranslatorInterface;
 
@@ -47,7 +47,7 @@ EOL;
     protected static $defaultName = 'creative:db-i18n:migrate';
 
     /**
-     * @var ContainerInterface
+     * @var ParameterBagInterface
      */
     private $container;
 
@@ -74,17 +74,17 @@ EOL;
     /**
      * MigrateToDatabaseCommand constructor.
      *
-     * @param ContainerInterface  $container
-     * @param TranslatorInterface $translator
-     * @param ManagerRegistry     $doctrine
-     * @param string|null         $name
+     * @param ParameterBagInterface $container
+     * @param TranslatorInterface   $translator
+     * @param ManagerRegistry       $doctrine
+     * @param string|null           $name
      */
-    public function __construct(ContainerInterface $container, TranslatorInterface $translator, ManagerRegistry $doctrine, string $name = null)
+    public function __construct(ParameterBagInterface $container, TranslatorInterface $translator, ManagerRegistry $doctrine, string $name = null)
     {
         parent::__construct($name);
         $this->container = $container;
         $this->translator = $translator;
-        $this->entityClass = $this->container->getParameter('db_i18n.entity');
+        $this->entityClass = $this->container->get('db_i18n.entity');
         $this->doctrine = $doctrine;
     }
 
@@ -113,7 +113,7 @@ EOL;
             throw new RuntimeException('Translator service of application has no \'getCatalogue\' method');
         }
 
-        if (!$this->container->hasParameter('locales') || !is_array($this->container->getParameter('locales'))) {
+        if (!$this->container->has('locales') || !is_array($this->container->get('locales'))) {
             throw new RuntimeException('Application container must have a \'locales\' parameter, and this parameter must be an array');
         }
 
@@ -125,7 +125,7 @@ EOL;
         $catalogue = $this->translator->getCatalogue($locale);
 
         $forExport = $catalogue->all($domain);
-        $exported = $this->exportToDatabase($forExport, $locale, $this->container->getParameter('db_i18n.domain'));
+        $exported = $this->exportToDatabase($forExport, $locale, $this->container->get('db_i18n.domain'));
 
         $io->writeln(sprintf(
             'Loaded form %s: %u messages, exported to database: %s',
@@ -210,7 +210,7 @@ EOL;
      */
     protected function getLocale(string $filename): ?string
     {
-        $locales = $this->container->getParameter('locales');
+        $locales = $this->container->get('locales');
         $locale = null;
         foreach ($locales as $localeParam) {
             if (strpos($filename, $localeParam) !== false) {
@@ -236,7 +236,7 @@ EOL;
         if (strpos($path, '/') === 0) {
             $realPath = $path;
         } else {
-            $realPath = $this->container->getParameter('kernel.root_dir') . '/../' . $path;
+            $realPath = $this->container->get('kernel.root_dir') . '/../' . $path;
         }
 
         if (!is_file($realPath) || !is_readable($realPath)) {
