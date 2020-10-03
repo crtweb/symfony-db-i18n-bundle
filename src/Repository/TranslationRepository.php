@@ -3,9 +3,11 @@
 namespace Creative\DbI18nBundle\Repository;
 
 use Creative\DbI18nBundle\Entity\Translation;
+use Creative\DbI18nBundle\Interfaces\EntityInterface;
 use Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
@@ -30,7 +32,8 @@ class TranslationRepository extends ServiceEntityRepository implements Translati
      * @param string $domain
      * @param string $locale
      *
-     * @return array|\Creative\DbI18nBundle\Interfaces\EntityInterface[]|\Doctrine\Common\Collections\Collection|mixed
+     * @return EntityInterface[]|Collection
+     * @psalm-return Collection<array-key, EntityInterface[]>
      */
     public function findByDomainAndLocale(string $domain, string $locale)
     {

@@ -32,13 +32,6 @@ class Kernel extends BaseKernel
     /**
      * @inheritDoc
      */
-    protected function configureRoutes(\Symfony\Component\Routing\RouteCollectionBuilder $routes)
-    {
-    }
-
-    /**
-     * @inheritDoc
-     */
     protected function configureContainer(\Symfony\Component\DependencyInjection\ContainerBuilder $c, \Symfony\Component\Config\Loader\LoaderInterface $loader)
     {
         $loader->load(__DIR__ . '/doctrine.yaml');

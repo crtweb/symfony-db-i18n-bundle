@@ -12,6 +12,7 @@ use Creative\DbI18nBundle\Interfaces\EntityInterface;
 use Creative\DbI18nBundle\Interfaces\TranslationRepositoryInterface;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 use Symfony\Component\Translation\Exception\InvalidResourceException;
 use Symfony\Component\Translation\Exception\NotFoundResourceException;
 use Symfony\Component\Translation\Loader\LoaderInterface;
@@ -35,13 +36,13 @@ class DbLoader implements LoaderInterface, DbLoaderInterface
 
     /**
      * DbLoader constructor.
-     * @param ContainerInterface $container
-     * @param ManagerRegistry $doctrine
+     * @param ParameterBagInterface $container
+     * @param ManagerRegistry       $doctrine
      */
-    public function __construct(ContainerInterface $container, ManagerRegistry $doctrine)
+    public function __construct(ParameterBagInterface $container, ManagerRegistry $doctrine)
     {
         $this->doctrine = $doctrine;
-        $this->entityClass = $container->getParameter('db_i18n.entity');
+        $this->entityClass = $container->get('db_i18n.entity');
     }
 
     /**
@@ -56,7 +57,7 @@ class DbLoader implements LoaderInterface, DbLoaderInterface
      * @throws NotFoundResourceException when the resource cannot be found
      * @throws InvalidResourceException  when the resource cannot be loaded
      */
-    public function load($resource, $locale, $domain = 'messages')
+    public function load($resource, string $locale, string $domain = 'messages'): MessageCatalogue
     {
         $messages = $this->getRepository()->findByDomainAndLocale($domain, $locale);
 

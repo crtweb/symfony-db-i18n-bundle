@@ -7,11 +7,16 @@ services:
     resource: '../../../src'
     exclude: '../../../src/{Entity,Resources}'
 
+  doctrine.orm.naming_strategy.underscore:
+    class: Doctrine\ORM\Mapping\UnderscoreNamingStrategy
+    arguments:
+      $numberAware: true
+
   translation.loader.db:
     class: Creative\DbI18nBundle\Loader\DbLoader
     public: '%kernel.debug%'
     arguments:
-      - '@service_container'
+      - '@parameter_bag'
       - '@doctrine'
     tags:
       - { name: translation.loader, alias: db }
@@ -23,7 +28,7 @@ services:
 
   Creative\DbI18nBundle\Command\MigrateToDatabaseCommand:
     arguments:
-      - '@service_container'
+      - '@parameter_bag'
       - '@translator.default'
       - '@doctrine'
     tags: [ console.command ]
