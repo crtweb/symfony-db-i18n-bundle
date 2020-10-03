@@ -19,7 +19,7 @@ class DbLoaderTest extends KernelTestCase
     public function testIsServiceConfigured(): void
     {
         self::bootKernel();
-        $this->assertInstanceOf(DbLoader::class, self::$container->get('translation.loader.db'));
+        self::assertInstanceOf(DbLoader::class, self::$container->get('translation.loader.db'));
     }
 
     protected function setUp(): void
@@ -51,7 +51,7 @@ class DbLoaderTest extends KernelTestCase
     {
         $service = self::$container->get('translation.loader.db');
         $cat = $service->load(null, 'en', 'db_messages');
-        $this->assertInstanceOf(MessageCatalogue::class, $cat);
-        $this->assertSame('This is a translation of key', $cat->get('translatable.key', 'db_messages'));
+        self::assertInstanceOf(MessageCatalogue::class, $cat);
+        self::assertSame('This is a translation of key', $cat->get('translatable.key', 'db_messages'));
     }
 }

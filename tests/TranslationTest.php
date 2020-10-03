@@ -25,53 +25,53 @@ class TranslationTest extends TestCase
 
     public function testGetId()
     {
-        $this->assertNull($this->entity->getId());
+        self::assertNull($this->entity->getId());
     }
 
     public function testSetDomain()
     {
-        $this->assertInstanceOf(Translation::class, $this->entity->setDomain('domain'));
+        self::assertInstanceOf(Translation::class, $this->entity->setDomain('domain'));
     }
 
     public function testSetLocale()
     {
-        $this->assertInstanceOf(Translation::class, $this->entity->setLocale('ru'));
+        self::assertInstanceOf(Translation::class, $this->entity->setLocale('ru'));
     }
 
     public function testGetKey()
     {
-        $this->assertNull($this->entity->getKey());
+        self::assertNull($this->entity->getKey());
     }
 
     public function testGetDomain()
     {
-        $this->assertNull($this->entity->getDomain());
+        self::assertNull($this->entity->getDomain());
         $this->entity->setDomain('domain');
-        $this->assertEquals('domain', $this->entity->getDomain());
+        self::assertEquals('domain', $this->entity->getDomain());
     }
 
     public function testGetTranslation()
     {
-        $this->assertNull($this->entity->getTranslation());
+        self::assertNull($this->entity->getTranslation());
         $this->entity->setTranslation('translation');
-        $this->assertEquals('translation', $this->entity->getTranslation());
+        self::assertEquals('translation', $this->entity->getTranslation());
     }
 
     public function testGetLocale()
     {
-        $this->assertNull($this->entity->getLocale());
+        self::assertNull($this->entity->getLocale());
         $this->entity->setLocale('en');
-        $this->assertEquals('en', $this->entity->getLocale());
+        self::assertEquals('en', $this->entity->getLocale());
     }
 
     public function testSetTranslation()
     {
-        $this->assertInstanceOf(Translation::class, $this->entity->setTranslation('translation'));
+        self::assertInstanceOf(Translation::class, $this->entity->setTranslation('translation'));
     }
 
     public function testSetKey()
     {
-        $this->assertInstanceOf(Translation::class, $this->entity->setKey('key'));
+        self::assertInstanceOf(Translation::class, $this->entity->setKey('key'));
     }
 
     public function testLoad()
@@ -83,10 +83,10 @@ class TranslationTest extends TestCase
             'domain' => 'domain',
         ];
 
-        $this->assertInstanceOf(Translation::class, $this->entity->load($params));
-        $this->assertEquals('en', $this->entity->getLocale());
-        $this->assertEquals('key', $this->entity->getKey());
-        $this->assertEquals('translation', $this->entity->getTranslation());
-        $this->assertEquals('domain', $this->entity->getDomain());
+        self::assertInstanceOf(Translation::class, $this->entity->load($params));
+        self::assertEquals('en', $this->entity->getLocale());
+        self::assertEquals('key', $this->entity->getKey());
+        self::assertEquals('translation', $this->entity->getTranslation());
+        self::assertEquals('domain', $this->entity->getDomain());
     }
 }
