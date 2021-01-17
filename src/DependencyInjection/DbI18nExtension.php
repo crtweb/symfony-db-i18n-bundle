@@ -35,7 +35,7 @@ class DbI18nExtension extends Extension
         $container->setParameter('db_i18n.entity', $config['entity']);
         $container->setParameter('db_i18n.domain', $config['domain']);
         $container->setParameter('db_i18n.root_dir', __DIR__ . '/../');
-        $container->setParameter('db_i18n.translation_dir', $container->getParameter('kernel.cache_dir'));
+        $container->setParameter('db_i18n.translation_dir', \dirname($container->getParameter('kernel.cache_dir')));
 
         $localeNames = [$container->getParameter('kernel.default_locale')];
         if ($container->hasParameter('locales') && is_array($locales = $container->getParameter('locales'))) {
